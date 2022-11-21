@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class Course {
-    private final ArrayList<Topic> topics = new ArrayList();
+    private final ArrayList<Topic> topics = new ArrayList<>();
     private final float totalScoreActivities;
     private final float totalScoreExercises;
     private final float totalScorePractices;
@@ -16,70 +16,54 @@ public class Course {
     }
 
     public void addModule(Topic topic) {
-        this.topics.add(topic);
+        topics.add(topic);
     }
 
     public float getExercisesMaxScore() {
-        return this.totalScoreExercises;
+        return totalScoreExercises;
     }
 
     public float getHomeworkMaxScore() {
-        return this.totalScorePractices;
+        return totalScorePractices;
     }
 
     public float getActivityMaxScore() {
-        return this.totalScoreActivities;
+        return totalScoreActivities;
     }
 
     public float getSemMaxScore() {
-        return this.totalScoreSeminarTasks;
+        return totalScoreSeminarTasks;
     }
 
     public ArrayList<Topic> getModules() {
-        return this.topics;
+        return topics;
     }
 
     public float getExercisesScore() {
-        float score = 0.0F;
-
-        Topic i;
-        for(Iterator var2 = this.topics.iterator(); var2.hasNext(); score += i.getExercisesScore()) {
-            i = (Topic)var2.next();
-        }
-
+        var score = 0f;
+        for(var i: topics)
+            score += i.getExercisesScore();
         return score;
     }
 
     public float getHomeworkScore() {
-        float score = 0.0F;
-
-        Topic i;
-        for(Iterator var2 = this.topics.iterator(); var2.hasNext(); score += i.getHomeworkScore()) {
-            i = (Topic)var2.next();
-        }
-
+        var score = 0f;
+        for(var i: topics)
+            score += i.getHomeworkScore();
         return score;
     }
 
     public float getActivityScore() {
-        float score = 0.0F;
-
-        Topic i;
-        for(Iterator var2 = this.topics.iterator(); var2.hasNext(); score += i.getActivityScore()) {
-            i = (Topic)var2.next();
-        }
-
+        var score = 0f;
+        for(var i: topics)
+            score += i.getActivityScore();
         return score;
     }
 
     public float getSemScore() {
-        float score = 0.0F;
-
-        Topic i;
-        for(Iterator var2 = this.topics.iterator(); var2.hasNext(); score += i.getSemScore()) {
-            i = (Topic)var2.next();
-        }
-
+        var score = 0f;
+        for(var i: topics)
+            score += i.getSemScore();
         return score;
     }
 }

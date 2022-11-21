@@ -1,7 +1,12 @@
 public class Person {
     private final String surnameName;
 
-    public Person(String surnameName) {
+    enum Gender{
+        Male,
+        Female
+    }
+
+    public Person(String surnameName){
         this.surnameName = surnameName;
     }
 
@@ -14,6 +19,6 @@ public class Person {
     }
 
     public String getSurnameName() {
-        return this.surnameName;
+        return surnameName;
     }
 }

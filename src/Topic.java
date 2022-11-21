@@ -9,8 +9,8 @@ public class Topic {
     private final float activityScore;
     private final float SeminarTasksMaxScore;
     private final float SeminarTasksScore;
-    private final ArrayList<Task> exercisePoints = new ArrayList();
-    private final ArrayList<Task> practicePoints = new ArrayList();
+    private final ArrayList<Task> exercisePoints = new ArrayList<>();
+    private final ArrayList<Task> practicePoints = new ArrayList<>();
 
     public Topic(String moduleName, float exercisesMaxScore, float homeworkMaxScore, float activityMaxScore, float semMaxScore, float activityScore, float semScore) {
         this.topicName = moduleName;
@@ -43,24 +43,16 @@ public class Topic {
     }
 
     public float getHomeworkScore() {
-        float score = 0.0F;
-
-        Task i;
-        for(Iterator var2 = this.practicePoints.iterator(); var2.hasNext(); score += i.getPointsScored()) {
-            i = (Task)var2.next();
-        }
-
+        var score = 0f;
+        for(var i: practicePoints)
+            score += i.getPointsScored();
         return score;
     }
 
     public float getExercisesScore() {
-        float score = 0.0F;
-
-        Task i;
-        for(Iterator var2 = this.exercisePoints.iterator(); var2.hasNext(); score += i.getPointsScored()) {
-            i = (Task)var2.next();
-        }
-
+        var score = 0f;
+        for(var i: exercisePoints)
+            score += i.getPointsScored();
         return score;
     }
 
@@ -89,34 +81,20 @@ public class Topic {
     }
 
     public String getResult() {
-        StringBuilder result = new StringBuilder();
+        var result = new StringBuilder();
         result.append("Модуль: ").append(this.getModuleName());
-        Iterator var2 = this.exercisePoints.iterator();
-
-        String var10000;
-        Task i;
-        String res;
-        while(var2.hasNext()) {
-            i = (Task)var2.next();
-            var10000 = i.getTaskName();
-            res = "\n " + var10000 + "  " + i.getPointsScored() + " из " + i.getMaxScore();
+        for(var i: exercisePoints){
+            var res = "\n " + i.getTaskName() + "  " + i.getPointsScored() + " из " + i.getMaxScore();
             result.append(res);
         }
-
-        var2 = this.practicePoints.iterator();
-
-        while(var2.hasNext()) {
-            i = (Task)var2.next();
-            var10000 = i.getTaskName();
-            res = "\n " + var10000 + "  " + i.getPointsScored() + " из " + i.getMaxScore();
+        for(var i: practicePoints){
+            var res = "\n " + i.getTaskName() + "  " + i.getPointsScored() + " из " + i.getMaxScore();
             result.append(res);
         }
-
         return result.toString();
     }
 
     public String toString() {
-        String var10000 = this.getModuleName();
-        return "Модуль: " + var10000 + "\n Активности: " + this.getActivityScore() + " из " + this.getActivityMaxScore() + "\n Упражнения: " + this.getExercisesScore() + " из " + this.getExercisesMaxScore() + "\n Домание работы: " + this.getHomeworkScore() + " из " + this.getHomeworkMaxScore() + "\n Сем: " + this.getActivityScore() + " из " + this.getActivityMaxScore() + "\n\n";
+        return "Модуль: " + getModuleName() + "\n Активности: " + getActivityScore() + " из " + getActivityMaxScore() + "\n Упражнения: " + getExercisesScore() + " из " + getExercisesMaxScore() + "\n Домание работы: " + getHomeworkScore() + " из " + getHomeworkMaxScore() + "\n Сем: " + getActivityScore() + " из " + getActivityMaxScore() + "\n\n";
     }
 }

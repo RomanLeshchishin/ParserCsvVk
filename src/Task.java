@@ -10,14 +10,14 @@ public class Task {
     }
 
     public String getTaskName() {
-        return this.taskName;
+        return taskName;
     }
 
     public float getMaxScore() {
-        return this.maxScore;
+        return maxScore;
     }
 
     public float getPointsScored() {
-        return this.pointsScored;
+        return pointsScored;
     }
 }

@@ -1,30 +1,22 @@
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Objects;
 
 public class Students {
-    private final ArrayList<Student> students = (new ParserCSV()).getStudents();
+    private final ArrayList<Student> students;
 
     public Students() throws IOException {
+        students = new ParserCsv().getStudents();
     }
 
-    public ArrayList<Student> getStudents() {
-        return this.students;
-    }
+    public ArrayList<Student> getStudents(){ return students; }
 
     public Student getStudent(String surnameName) {
-        Iterator var2 = this.students.iterator();
-
-        Student i;
-        do {
-            if (!var2.hasNext()) {
-                return null;
+        for(var i: students){
+            if (Objects.equals(i.getSurnameName(), surnameName)){
+                return i;
             }
-
-            i = (Student)var2.next();
-        } while(!Objects.equals(i.getSurnameName(), surnameName));
-
-        return i;
+        }
+        return null;
     }
 }
