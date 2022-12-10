@@ -10,8 +10,12 @@ public class Main {
 
     public static void main(String[] args) throws IOException, ClientException, ParseException, ApiException {
         var students = new Students();
-        var st = students.getStudent("Белобородова Полина");
-        System.out.println(st);
+        var course = new Course(32, 411, 2800, 32);
+        var st = students.getStudent("Mrmogo");
+        System.out.println(st.getFinalScores());
+        //System.out.println(students.getStudents());
+        /*System.out.println(course.getModules());
+        System.out.println(st.getSurnameName());
         System.out.println();
         System.out.println(st.getFinalScores());
         System.out.println();
@@ -20,7 +24,7 @@ public class Main {
         System.out.println(module);
         System.out.println(module.getResult());
         var vkUser = new VkApi();
-        System.out.println(vkUser.findUserInfo("Белобородова"));
+        System.out.println(vkUser.findUserInfo("Белобородова"));*/
     }
 }
 

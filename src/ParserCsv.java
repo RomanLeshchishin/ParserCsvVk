@@ -8,7 +8,9 @@ import java.util.List;
 import java.util.Objects;
 
 public class ParserCsv {
-    ArrayList<Student> students = new ArrayList<Student>();
+    ArrayList<Student> studentsWithGroups = new ArrayList<Student>();
+    ArrayList<String> groups = new  ArrayList<String>();
+    ArrayList<String> students = new  ArrayList<String>();
     String[] typesOfTasks;
     String[] maxPoints;
     String[] listTopics;
@@ -25,9 +27,20 @@ public class ParserCsv {
 
 
     private void createStudents(List<String[]> studentLines) {
-        for(int i = 3; i < studentLines.size(); i++){
-            students.add(createCourse(new Student(studentLines.get(i)[0], studentLines.get(i)[1]), studentLines.get(i)));
+        var countGroup = 1;
+        for(int i = 4; i < studentLines.size(); i++){
+            if (Objects.equals(studentLines.get(i)[1], studentLines.get(i-1)[1]))
+                studentsWithGroups.add(createCourse(new Student(countGroup, studentLines.get(i - 1)[0], studentLines.get(i - 1)[1]), studentLines.get(i - 1)));
+            else {
+                studentsWithGroups.add(createCourse(new Student(countGroup, studentLines.get(i - 1)[0], studentLines.get(i - 1)[1]), studentLines.get(i - 1)));
+                countGroup += 1;
+            }
+            groups.add(studentLines.get(i - 1)[1]);
+            students.add(studentLines.get(i - 1)[0]);
         }
+        studentsWithGroups.add(createCourse(new Student(countGroup, studentLines.get(studentLines.size() - 1)[0], studentLines.get(studentLines.size() - 1)[1]), studentLines.get(studentLines.size() - 1)));
+        groups.add(studentLines.get(studentLines.size() - 1)[1]);
+        students.add(studentLines.get(studentLines.size() - 1)[0]);
 
     }
 
@@ -84,7 +97,9 @@ public class ParserCsv {
 
         return -1;
     }
-    public ArrayList<Student> getStudents() {
-        return students;
+    public ArrayList<Student> getStudentsWithGroups() {
+        return studentsWithGroups;
     }
+    public ArrayList<String> getGroups(){return groups;}
+    public ArrayList<String> getStudents(){return students;}
 }
