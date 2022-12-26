@@ -1,4 +1,7 @@
+import com.vk.api.sdk.exceptions.ApiException;
+import com.vk.api.sdk.exceptions.ClientException;
 import java.io.IOException;
+import java.text.ParseException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -6,17 +9,19 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.lang.Thread;
 
 public class ParserCsv {
     ArrayList<Student> studentsWithGroups = new ArrayList<Student>();
     ArrayList<String> groups = new  ArrayList<String>();
     ArrayList<String> students = new  ArrayList<String>();
+    VkApi vkUser = new VkApi();
     String[] typesOfTasks;
     String[] maxPoints;
     String[] listTopics;
 
-    public ParserCsv() throws IOException {
-        var pathFile = Path.of("C:\\Users\\USER\\IdeaProjects\\ParserCsvVk\\basicprogramming_2.csv");
+    public ParserCsv() throws IOException, ClientException, ParseException, ApiException, InterruptedException {
+        var pathFile = Path.of("C:\\Users\\USER\\IdeaProjects\\ParserCsvVk\\basicprogramming_3.csv");
         var lines = Files.readAllLines(pathFile, StandardCharsets.UTF_8);
         var dataFromFile = lines.stream().map(line ->line.split(";", -1)).toList();
         listTopics = dataFromFile.get(0);
@@ -26,21 +31,26 @@ public class ParserCsv {
     }
 
 
-    private void createStudents(List<String[]> studentLines) {
+    private void createStudents(List<String[]> studentLines) throws ClientException, ParseException, ApiException, InterruptedException {
         var countGroup = 1;
-        for(int i = 4; i < studentLines.size(); i++){
-            if (Objects.equals(studentLines.get(i)[1], studentLines.get(i-1)[1]))
-                studentsWithGroups.add(createCourse(new Student(countGroup, studentLines.get(i - 1)[0], studentLines.get(i - 1)[1]), studentLines.get(i - 1)));
+        var stLinesSize = studentLines.size();
+        for(int i = 4; i < stLinesSize; i++){
+            if (Objects.equals(studentLines.get(i)[1], studentLines.get(i - 1)[1])) {
+                studentsWithGroups.add(createCourse(new Student(countGroup, studentLines.get(i - 1)[0],
+                        studentLines.get(i - 1)[1]), studentLines.get(i - 1)));
+            }
             else {
-                studentsWithGroups.add(createCourse(new Student(countGroup, studentLines.get(i - 1)[0], studentLines.get(i - 1)[1]), studentLines.get(i - 1)));
+                studentsWithGroups.add(createCourse(new Student(countGroup, studentLines.get(i - 1)[0],
+                         studentLines.get(i - 1)[1]), studentLines.get(i - 1)));
                 countGroup += 1;
             }
             groups.add(studentLines.get(i - 1)[1]);
             students.add(studentLines.get(i - 1)[0]);
         }
-        studentsWithGroups.add(createCourse(new Student(countGroup, studentLines.get(studentLines.size() - 1)[0], studentLines.get(studentLines.size() - 1)[1]), studentLines.get(studentLines.size() - 1)));
-        groups.add(studentLines.get(studentLines.size() - 1)[1]);
-        students.add(studentLines.get(studentLines.size() - 1)[0]);
+        studentsWithGroups.add(createCourse(new Student(countGroup, studentLines.get(stLinesSize - 1)[0], studentLines.get(stLinesSize - 1)[1]),
+                studentLines.get(stLinesSize - 1)));
+        groups.add(studentLines.get(stLinesSize - 1)[1]);
+        students.add(studentLines.get(stLinesSize - 1)[0]);
 
     }
 

@@ -1,4 +1,8 @@
+import com.vk.api.sdk.exceptions.ApiException;
+import com.vk.api.sdk.exceptions.ClientException;
+
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -7,7 +11,7 @@ public class Students {
     private final ArrayList<String> groups;
     private final ArrayList<String> students;
 
-    public Students() throws IOException {
+    public Students() throws IOException, ClientException, ParseException, ApiException, InterruptedException {
         studentsWithGroups = new ParserCsv().getStudentsWithGroups();
         groups = new ParserCsv().getGroups();
         students = new ParserCsv().getStudents();
